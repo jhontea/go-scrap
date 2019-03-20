@@ -8,6 +8,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+
+	"github.com/jhontea/go-scrap/db"
 )
 
 func main() {
@@ -15,6 +17,8 @@ func main() {
 	fmt.Println("loading .env")
 	godotenv.Load()
 	fmt.Println("success loading .env")
+
+	db.DBInit()
 
 	route := gin.New()
 	route.Use(gin.Logger())
