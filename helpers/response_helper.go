@@ -57,3 +57,14 @@ func (handler *ResponseHelper) FailedResponse(data interface{}, message string) 
 
 	return response
 }
+
+func (handler *ResponseHelper) ErrorResponse(data interface{}, message string) responses.Response {
+	response := responses.Response{
+		Code:    http.StatusInternalServerError,
+		Data:    data,
+		Message: message,
+		Status:  constants.STATUS_FAILED,
+	}
+
+	return response
+}
