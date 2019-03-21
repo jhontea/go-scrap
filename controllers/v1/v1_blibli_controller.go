@@ -25,8 +25,8 @@ func (handler *V1BlibliController) GetBlibliProduct(context *gin.Context) {
 	context.JSON(response.Code, response)
 }
 
-func (handler *V1BlibliController) GetBlibliProductDetail(context *gin.Context) {
-	result, err := handler.BlibliService.GetBlibliProductDetail()
+func (handler *V1BlibliController) GetBlibliProductInfo(context *gin.Context) {
+	result, err := handler.BlibliService.GetBlibliProductInfo()
 
 	if err != nil {
 		response := handler.ResponseHelper.ErrorResponse(result, err.Error())
@@ -38,8 +38,34 @@ func (handler *V1BlibliController) GetBlibliProductDetail(context *gin.Context) 
 	context.JSON(response.Code, response)
 }
 
-func (handler *V1BlibliController) GetBlibliProductWithDetail(context *gin.Context) {
-	result, err := handler.BlibliService.GetBlibliProductWithDetail()
+func (handler *V1BlibliController) GetBlibliProductWithInfo(context *gin.Context) {
+	result, err := handler.BlibliService.GetBlibliProductWithInfo()
+
+	if err != nil {
+		response := handler.ResponseHelper.ErrorResponse(result, err.Error())
+		context.JSON(response.Code, response)
+		return
+	}
+
+	response := handler.ResponseHelper.SuccessResponse(result, "success retrieve data")
+	context.JSON(response.Code, response)
+}
+
+func (handler *V1BlibliController) GetBlibliProductSummary(context *gin.Context) {
+	result, err := handler.BlibliService.GetBlibliProductSummary()
+
+	if err != nil {
+		response := handler.ResponseHelper.ErrorResponse(result, err.Error())
+		context.JSON(response.Code, response)
+		return
+	}
+
+	response := handler.ResponseHelper.SuccessResponse(result, "success retrieve data")
+	context.JSON(response.Code, response)
+}
+
+func (handler *V1BlibliController) GetBlibliProductInfoSummary(context *gin.Context) {
+	result, err := handler.BlibliService.GetBlibliProductInfoSummary()
 
 	if err != nil {
 		response := handler.ResponseHelper.ErrorResponse(result, err.Error())

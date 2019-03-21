@@ -12,7 +12,9 @@ func Route(route *gin.Engine) {
 	{
 		V1BlibliControllerHandler := &v1Controller.V1BlibliController{}
 		v1.GET("/product/blibli", V1BlibliControllerHandler.GetBlibliProduct)
-		v1.GET("/product/blibli/detail", V1BlibliControllerHandler.GetBlibliProductDetail)
-		v1.GET("/product/blibli/all", V1BlibliControllerHandler.GetBlibliProductWithDetail)
+		v1.GET("/product/blibli/info", V1BlibliControllerHandler.GetBlibliProductInfo)
+		v1.GET("/product/blibli/all", V1BlibliControllerHandler.GetBlibliProductWithInfo)
+		v1.GET("/product/blibli/summary", V1BlibliControllerHandler.GetBlibliProductSummary)
+		v1.GET("/product/blibli/info-summary", V1BlibliControllerHandler.GetBlibliProductInfoSummary)
 	}
 }

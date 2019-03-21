@@ -30,15 +30,15 @@ func (service *V1BlibliService) GetBlibliProduct() (responses.BlibliProductRespo
 	return blibliResponse, nil
 }
 
-func (service *V1BlibliService) GetBlibliProductDetail() (responses.BlibliProductDetailResponse, error) {
+func (service *V1BlibliService) GetBlibliProductInfo() (responses.BlibliProductInfoResponse, error) {
 	urlHelper := helpers.UrlHelper{
 		Method: constants.METHOD_GET,
-		Url:    "https://www.blibli.com/backend/product/products/pc--MTA-2999604/_info?defaultItemSku=",
+		Url:    "https://www.blibli.com/backend/product/products/pc--MTA-2765803/_info?defaultItemSku=",
 	}
 
 	response, err := urlHelper.ProcessRequest()
 
-	var blibliResponse responses.BlibliProductDetailResponse
+	var blibliResponse responses.BlibliProductInfoResponse
 
 	if err != nil {
 		return blibliResponse, err
@@ -49,7 +49,7 @@ func (service *V1BlibliService) GetBlibliProductDetail() (responses.BlibliProduc
 	return blibliResponse, nil
 }
 
-func (service *V1BlibliService) GetBlibliProductDetailUrl(url string) (responses.BlibliProductDetailResponse, error) {
+func (service *V1BlibliService) GetBlibliProductInfoUrl(url string) (responses.BlibliProductInfoResponse, error) {
 	urlHelper := helpers.UrlHelper{
 		Method: constants.METHOD_GET,
 		Url:    url,
@@ -57,7 +57,7 @@ func (service *V1BlibliService) GetBlibliProductDetailUrl(url string) (responses
 
 	response, err := urlHelper.ProcessRequest()
 
-	var blibliResponse responses.BlibliProductDetailResponse
+	var blibliResponse responses.BlibliProductInfoResponse
 
 	if err != nil {
 		return blibliResponse, err
@@ -68,7 +68,7 @@ func (service *V1BlibliService) GetBlibliProductDetailUrl(url string) (responses
 	return blibliResponse, nil
 }
 
-func (service *V1BlibliService) GetBlibliProductWithDetail() (responses.BlibliProductWithDetailResponse, error) {
+func (service *V1BlibliService) GetBlibliProductWithInfo() (responses.BlibliProductWithInfoResponse, error) {
 	urlHelper := helpers.UrlHelper{
 		Method: constants.METHOD_GET,
 		Url:    "https://www.blibli.com/backend/search/products?page=1&start=0&searchTerm=nike%20shoes&intent=false&merchantSearch=true&sort=10&category=OL-1000001&customUrl=olahraga-aktivitas-luar-ruang&shipment=blibli&showFacet=true",
@@ -76,7 +76,7 @@ func (service *V1BlibliService) GetBlibliProductWithDetail() (responses.BlibliPr
 
 	response, err := urlHelper.ProcessRequest()
 
-	var blibliResponse responses.BlibliProductWithDetailResponse
+	var blibliResponse responses.BlibliProductWithInfoResponse
 
 	if err != nil {
 		return blibliResponse, err
@@ -86,13 +86,57 @@ func (service *V1BlibliService) GetBlibliProductWithDetail() (responses.BlibliPr
 
 	for key, products := range blibliResponse.Data.Products {
 		url := "https://www.blibli.com/backend/product/products/" + products.FormattedID + "/_info?defaultItemSku="
-		responseDetail, _ := service.GetBlibliProductDetailUrl(url)
+		responseDetail, _ := service.GetBlibliProductInfoUrl(url)
 
 		blibliResponse.Data.Products[key].Additional = url
 		blibliResponse.Data.Products[key].Options = responseDetail.Data.Options
 		blibliResponse.Data.Products[key].PriceInfo = responseDetail.Data.Price
 
 	}
+
+	return blibliResponse, nil
+}
+
+func (service *V1BlibliService) GetBlibliProductSummary() (responses.BlibliSummaryResponse, error) {
+	urlHelper := helpers.UrlHelper{
+		Method: constants.METHOD_GET,
+		Url:    "https://www.blibli.com/backend/product/products/ps--NIE-12227-04351/_summary?selectedItemSku=",
+	}
+
+	response, err := urlHelper.ProcessRequest()
+
+	var blibliResponse responses.BlibliSummaryResponse
+
+	if err != nil {
+		return blibliResponse, err
+	}
+
+	json.Unmarshal([]byte(response.Body), &blibliResponse)
+
+	return blibliResponse, nil
+}
+
+func (service *V1BlibliService) GetBlibliProductInfoSummary() (responses.BlibliInfoSummaryResponse, error) {
+	urlHelper := helpers.UrlHelper{
+		Method: constants.METHOD_GET,
+		Url:    "https://www.blibli.com/backend/product/products/ps--NIE-12227-04351/_summary?selectedItemSku=",
+	}
+
+	response, err := urlHelper.ProcessRequest()
+
+	var blibliResponse responses.BlibliInfoSummaryResponse
+
+	if err != nil {
+		return blibliResponse, err
+	}
+
+	json.Unmarshal([]byte(response.Body), &blibliResponse)
+
+	url := "https://www.blibli.com/backend/product/products/ps--NIE-12227-04351/_info?defaultItemSku="
+	responseDetail, _ := service.GetBlibliProductInfoUrl(url)
+
+	blibliResponse.Data.Options = responseDetail.Data.Options
+	blibliResponse.Data.Price = responseDetail.Data.Price
 
 	return blibliResponse, nil
 }
