@@ -17,3 +17,14 @@ func TestGetBlibliProduct(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(result)
 }
+
+func TestGetBlibliProductDetail(t *testing.T) {
+	service := V1BlibliService{}
+
+	result, err := service.GetBlibliProductDetail()
+
+	assert.Nil(t, err)
+
+	fmt.Println(err)
+	fmt.Println(result)
+}

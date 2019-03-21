@@ -12,5 +12,6 @@ func Route(route *gin.Engine) {
 	{
 		V1BlibliControllerHandler := &v1Controller.V1BlibliController{}
 		v1.GET("/product/blibli", V1BlibliControllerHandler.GetBlibliProduct)
+		v1.GET("/product/blibli/detail", V1BlibliControllerHandler.GetBlibliProductDetail)
 	}
 }
