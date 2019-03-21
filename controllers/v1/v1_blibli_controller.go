@@ -37,3 +37,16 @@ func (handler *V1BlibliController) GetBlibliProductDetail(context *gin.Context) 
 	response := handler.ResponseHelper.SuccessResponse(result, "success retrieve data")
 	context.JSON(response.Code, response)
 }
+
+func (handler *V1BlibliController) GetBlibliProductWithDetail(context *gin.Context) {
+	result, err := handler.BlibliService.GetBlibliProductWithDetail()
+
+	if err != nil {
+		response := handler.ResponseHelper.ErrorResponse(result, err.Error())
+		context.JSON(response.Code, response)
+		return
+	}
+
+	response := handler.ResponseHelper.SuccessResponse(result, "success retrieve data")
+	context.JSON(response.Code, response)
+}

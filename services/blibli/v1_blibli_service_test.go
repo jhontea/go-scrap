@@ -28,3 +28,14 @@ func TestGetBlibliProductDetail(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(result)
 }
+
+func TestGetBlibliProductWithDetail(t *testing.T) {
+	service := V1BlibliService{}
+
+	result, err := service.GetBlibliProductWithDetail()
+
+	assert.Nil(t, err)
+
+	fmt.Println(err)
+	fmt.Println(result)
+}
